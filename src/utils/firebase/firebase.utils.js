@@ -8,7 +8,9 @@ import {
     getAuth, 
     signInWithRedirect,
     signInWithPopup, 
-    GoogleAuthProvider //we can use any provider we wanted such as Facebook, google , own emailaddress ...
+    GoogleAuthProvider, //we can use any provider we wanted such as Facebook, google , own emailaddress ...
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 } from "firebase/auth"
 
 //get methods from firestore service (firebase/firestore)
@@ -43,18 +45,13 @@ export { auth }; // its not export defaut so we need {} OR we can write it like 
 
 export const signInWithGooglePopup =  () => signInWithPopup(auth, gooleProvider);
 
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, gooleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, gooleProvider); // NOT WORKING
 
 export const db = getFirestore(); //get db from firebase
 
-export const authPromise=()=>{
-    return new Promise((resolve,reject)=>{
-        const user = firebaseApp.auth().currentUser;
-        console.log(user.email)
-    })
-}
-
-export const createUserDocumentFromAuth =  async(userAuth) => {
+export const createUserDocumentFromAuth =  async (userAuth, additionalInformation = {}) => {
+    if(!userAuth) return;
+    
     //read user information when user sign in with google account (or this google account is valid/available)
     const userDocRef = doc(db, "users", userAuth.uid ) //path: table name in FireStore
     console.log(userDocRef)
@@ -71,7 +68,7 @@ export const createUserDocumentFromAuth =  async(userAuth) => {
 
         try {
             //create this user to "users" table
-            await setDoc(userDocRef, { displayName, email, createAt });
+            await setDoc(userDocRef, { displayName, email, createAt, ...additionalInformation });
 
         } catch (error) {
             console.log("cannot create user ", error.message);
@@ -80,3 +77,16 @@ export const createUserDocumentFromAuth =  async(userAuth) => {
     return userDocRef;
 
 }
+
+//sign up
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+    return await createUserWithEmailAndPassword(auth, email, password); // just a service, not create user in db yet
+}
+
+//sign in with email & password
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+    return await signInWithEmailAndPassword(auth, email, password); // just a service, not create user in db yet
+}
+
