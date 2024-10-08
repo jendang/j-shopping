@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import {  useState } from "react"
 //import { useEffect } from "react"
 //import {  getRedirectResult } from "firebase/auth" 
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils"; 
@@ -9,7 +9,6 @@ import Button from "../../components/button/button.component";
 
 import "./sign-in-form.styles.scss"
 
-import { UserContext } from "../../context/user.context";
 
 const defaultFormFields = {
    
@@ -39,7 +38,7 @@ const SignInForm = () => {
 
     const { email, password } = formFields;
 
-    const { setCurrentUser } = useContext(UserContext);
+    //const { setCurrentUser } = useContext(UserContext); // we use Observer of auth changes to manage this
 
     const handleChange = (event)=> {
         const { name, value } = event.target;
@@ -59,10 +58,11 @@ const SignInForm = () => {
         event.preventDefault();
         
         try {
-            const { user } = await signInAuthUserWithEmailAndPassword(email, password);
+            await signInAuthUserWithEmailAndPassword(email, password);
+            //const { user } = await signInAuthUserWithEmailAndPassword(email, password);
             //console.log(user);
 
-            setCurrentUser(user);
+            //setCurrentUser(user); // we use Observer of auth changes to manage this
 
             resetFormFields();
 
@@ -90,7 +90,7 @@ const SignInForm = () => {
 
         const {user} = await signInWithGooglePopup();
        // console.log(user);
-        await createUserDocumentFromAuth(user)
+        
         
     }
 

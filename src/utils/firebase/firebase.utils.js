@@ -11,7 +11,8 @@ import {
     GoogleAuthProvider, //we can use any provider we wanted such as Facebook, google , own emailaddress ...
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    onAuthStateChanged
 } from "firebase/auth"
 
 //get methods from firestore service (firebase/firestore)
@@ -95,3 +96,5 @@ export const signOutUser = async () => {
     return await signOut(auth)
 }
 
+//create an Observer to listen all changes of authentication procedure
+export const onAuthStateChangedListenter = (callback) =>  onAuthStateChanged(auth, callback)
