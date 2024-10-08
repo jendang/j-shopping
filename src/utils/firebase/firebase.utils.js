@@ -10,7 +10,8 @@ import {
     signInWithPopup, 
     GoogleAuthProvider, //we can use any provider we wanted such as Facebook, google , own emailaddress ...
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signOut
 } from "firebase/auth"
 
 //get methods from firestore service (firebase/firestore)
@@ -88,5 +89,9 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
     if(!email || !password) return;
     return await signInWithEmailAndPassword(auth, email, password); // just a service, not create user in db yet
+}
+
+export const signOutUser = async () => {
+    return await signOut(auth)
 }
 
