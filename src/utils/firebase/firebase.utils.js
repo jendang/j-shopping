@@ -20,7 +20,12 @@ import {
     getFirestore,
     doc, //read data
     getDoc, //access data
-    setDoc //set data
+    setDoc, //set data,
+    collection, // get "table" references
+    writeBatch, // write data to the table
+    query,
+    getDocs
+
 } from "firebase/firestore"
 
 // Your web app's Firebase configuration
@@ -35,6 +40,59 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+
+//collectionKey: table name such as "users", "categories"...
+// objectsToAdd: data row for that table
+// RUN ONE TIME TO ADD DATA TO FIRESTORE
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    
+    //create table in firestore
+    const collectionRef = collection(db, collectionKey);
+
+    const batch = writeBatch(db);
+    objectsToAdd.forEach(item => {
+        const docRef = doc(collectionRef, item.title.toLowerCase());
+        batch.set(docRef, item)
+    } );
+    await batch.commit();
+
+    console.log("done write data to firestore")
+
+}
+
+
+export const getCategoriesAndDocuments = async() => {
+    /*
+        // SAMPLE DATA STRUCTURE
+        hats:{
+            title: "Hats"
+            items: [
+                {
+                    id,
+                    name, 
+                    price,
+                },
+                {},
+            ]
+        }
+    */
+
+    //if not available, firestore will generate one
+    const collectionRef = collection(db, "categories");
+    const qry = query(collectionRef);
+
+    const querySnapshot = await getDocs(qry);
+
+    // give an array of all documents(data) inside collection(table)
+    const categoryMap =  querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items} = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+
+    },{})
+    
+    return categoryMap;
+}
 
 const gooleProvider = new GoogleAuthProvider();
 //config for sign in with google accounts
