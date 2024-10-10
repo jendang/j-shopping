@@ -17,12 +17,12 @@ import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils';
         ]
     }
 */
-export const ProductsContext = createContext({
-    products: []
+export const CategoriesContext = createContext({
+    categoriesMap: {}
 });
 
-export const ProductsProvider = ({ children }) => {
-    const [ products, setProducts ] = useState([])
+export const CategoriesProvider = ({ children }) => {
+    const [ categoriesMap, setCategoriesMap ] = useState({})
 
     // *** RUN ONE TIME TO WRITE DATA INTO FIRESTORE DATABASE
     // useEffect(() => {
@@ -33,13 +33,14 @@ export const ProductsProvider = ({ children }) => {
         const getCategoriesMap = async() => {
             const categoriesMap = await getCategoriesAndDocuments();
             console.log(categoriesMap);
+            setCategoriesMap(categoriesMap);
         }
 
 
         getCategoriesMap();
     }, [])
 
-    const value = { products }
+    const value = { categoriesMap }
 
-    return <ProductsContext.Provider value={value}>{ children }</ProductsContext.Provider>
+    return <CategoriesContext.Provider value={value}>{ children }</CategoriesContext.Provider>
 }
