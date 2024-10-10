@@ -56,12 +56,12 @@ export const createUserDocumentFromAuth =  async (userAuth, additionalInformatio
     
     //read user information when user sign in with google account (or this google account is valid/available)
     const userDocRef = doc(db, "users", userAuth.uid ) //path: table name in FireStore
-    console.log(userDocRef)
+    //console.log(userDocRef)
 
     //getDoc : get type "document" of userDocRef to check existed
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot)
-    console.log("user existed?? :" + userSnapshot.exists()) // check if this user is existed in db of firestore or not
+   // console.log(userSnapshot)
+    //console.log("user existed?? :" + userSnapshot.exists()) // check if this user is existed in db of firestore or not
 
     //if user not existed => create user in "users" table
     if(!userSnapshot.exists()){
