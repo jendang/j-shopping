@@ -4,6 +4,8 @@ import { ReactComponent as JLogo } from "../../assets/crown.svg"
 import "./Navigation.styles.scss"
 import { UserContext } from "../../context/user.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
 const Navigation = () => {
   //access currentUser who just signedIn or signedUp
@@ -23,14 +25,17 @@ const Navigation = () => {
               currentUser 
               ? 
               <div>
-                <span className="nav-link" onClick={signOutUser}>SIGN OUT</span>
                 <span>{currentUser.displayName}</span> 
+                <span className="nav-link" onClick={signOutUser}>SIGN OUT</span>
               </div>
               
               :  <Link  className="nav-link" to="/auth">SIGN IN</Link>
             }
+
+            <CartIcon />
            
           </div>
+          <CartDropdown />
         </div>
         <Outlet />
       </Fragment>
