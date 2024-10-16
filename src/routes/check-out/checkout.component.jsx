@@ -2,6 +2,7 @@ import { useContext } from "react";
 import "./checkout.styles.scss"
 import { CartContext } from "../../context/cart.context";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+import PaymentForm from "../../components/payment-form/payment-form.component";
 
 const Checkout = () => {
     const { cartItems, total } = useContext(CartContext);
@@ -17,6 +18,7 @@ const Checkout = () => {
             </div>
             {cartItems.map(item => <CheckoutItem key={item.id} cartItem={item}/>)}
             <span className="total">Total: ${total}</span>
+            <PaymentForm />
         </div>
     );
 };
