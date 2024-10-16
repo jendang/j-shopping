@@ -12,7 +12,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 const Navigation = () => {
   //access currentUser who just signedIn or signedUp
   const { currentUser } = useContext(UserContext);
-  //console.log(currentUser)
+  //console.log(currentUser.displayName)
 
   // if cartIcon true => dropdown open 
   const { isCartOpen } = useContext(CartContext);
@@ -40,7 +40,7 @@ const Navigation = () => {
             <CartIcon />
            
           </div>
-          
+
           {/* isCartOpen is TRUE => dropdown open, default is FALSE from CartContext */}
           { isCartOpen && <CartDropdown /> }
           
