@@ -4,7 +4,7 @@ import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "
 
 import FormInput from "../../components/form-input/form-input.component"
 
-import Button from "../../components/button/button.component";
+import Button from "../../components/button/button.component.tsx";
 
 import "./sign-up-form.styles.scss"
 
@@ -83,7 +83,7 @@ const SignUpForm = () => {
                 <FormInput label="Email" onChange={handleChange} name="email" value={email} type="email"/>
                 <FormInput label="Password" onChange={handleChange} name="password" value={password} type="password"/>
                 <FormInput label="Confirm Password" onChange={handleChange} name="confirmPassword" value={confirmPassword} type="password"/>
-                <Button type="submit" buttonType="default">Sign Up</Button>
+                <Button type="submit">Sign Up</Button>
             </form>
         </div>
     );

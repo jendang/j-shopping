@@ -2,7 +2,7 @@ import "./payment-form.styles.scss"
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 
-import Button from "../button/button.component"
+import Button, {BUTTON_TYPES_CLASSES} from "../button/button.component.tsx"
 import { useContext, useState } from "react";
 import { CartContext } from "../../context/cart.context";
 import { UserContext } from "../../context/user.context";
@@ -71,7 +71,7 @@ const PaymentForm = (props) => {
                 <h2>Credit card payment: </h2>
                 <CardElement />
             </div>
-            <Button isLoading={isProcessingPayment} type="submit" buttonType="inverted" onClick={paymentHandler}>Pay now</Button>
+            <Button isLoading={isProcessingPayment} type="submit" buttonType={BUTTON_TYPES_CLASSES.inverted} onClick={paymentHandler}>Pay now</Button>
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import "./cart-dropdown.styles.scss"
-import Button from "../button/button.component"
+import Button, {BUTTON_TYPES_CLASSES} from "../button/button.component.tsx"
 import CartItem from "../cart-item/cart-item.component";
 import { useContext } from "react";
 import { CartContext } from "../../context/cart.context";
@@ -22,7 +22,7 @@ const CartDropdown = () => {
                     cartItems.map(item => <CartItem key={item.id} cartItem={item}/>)
                 }
             </div>
-            <Button buttonType="" onClick={goToCheckouthandler}>Go to checkout</Button>
+            <Button buttonType={BUTTON_TYPES_CLASSES.inverted} onClick={goToCheckouthandler}>Go to checkout</Button>
         </div>
     );
 };

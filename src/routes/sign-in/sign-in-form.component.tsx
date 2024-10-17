@@ -1,11 +1,11 @@
-import {  useState } from "react"
+import {  ChangeEvent, FormEvent, useState } from "react"
 //import { useEffect } from "react"
 //import {  getRedirectResult } from "firebase/auth" 
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils"; 
 
 import FormInput from "../../components/form-input/form-input.component"
 
-import Button from "../../components/button/button.component";
+import Button, {BUTTON_TYPES_CLASSES} from "../../components/button/button.component.tsx";
 
 import "./sign-in-form.styles.scss"
 
@@ -40,7 +40,7 @@ const SignInForm = () => {
 
     //const { setCurrentUser } = useContext(UserContext); // we use Observer of auth changes to manage this
 
-    const handleChange = (event)=> {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>)=> {
         const { name, value } = event.target;
         setFormFields(() => {
             return({
@@ -54,7 +54,7 @@ const SignInForm = () => {
         return setFormFields(defaultFormFields);
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         try {
@@ -103,8 +103,8 @@ const SignInForm = () => {
                 <FormInput label="Email" onChange={handleChange} name="email" value={email} type="email"/>
                 <FormInput label="Password" onChange={handleChange} name="password" value={password} type="password"/>
                 <div className="buttons-container">
-                    <Button type="submit" buttonType="default">Sign In</Button>
-                    <Button type="button" onClick={signInWithGoogleUser} buttonType="google">Google SignIn</Button>
+                    <Button type="submit">Sign In</Button>
+                    <Button type="button" onClick={signInWithGoogleUser} buttonType={BUTTON_TYPES_CLASSES.google}>Google SignIn</Button>
                     {/* Not working */}
                     {/* <button onClick={signInWithGoogleRedirect}>Sign in with Google Redirect</button> */}
                 </div>
